@@ -1065,7 +1065,7 @@
  "idx": 82,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-11-17 17:20:54.984348",
+ "modified": "2022-12-28 06:25:19.232788",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation",
@@ -1162,5 +1162,6 @@
  "sort_order": "DESC",
  "states": [],
  "timeline_field": "party_name",
- "title_field": "title"
+ "title_field": "title",
+ "track_changes": 1
 }

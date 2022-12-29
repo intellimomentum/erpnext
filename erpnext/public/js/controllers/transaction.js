@@ -41,7 +41,14 @@ erpnext.TransactionController = class TransactionController extends erpnext.taxe
 			cur_frm.cscript.set_gross_profit(item);
 			cur_frm.cscript.calculate_taxes_and_totals();
 			cur_frm.cscript.calculate_stock_uom_rate(frm, cdt, cdn);
+
+
+			
+			
 		});
+
+		//frappe.ui.form.on(this.frm.doctype + " Item", "position_group", function(frm, cdt, cdn) {};
+		
 
 		frappe.ui.form.on(this.frm.cscript.tax_table, "rate", function(frm, cdt, cdn) {
 			cur_frm.cscript.calculate_taxes_and_totals();
@@ -409,6 +416,42 @@ erpnext.TransactionController = class TransactionController extends erpnext.taxe
 		var sms_man = new erpnext.SMSManager(this.frm.doc);
 	}
 
+	position_group(doc, cdt, cdn) {
+		var item = frappe.get_doc(cdt, cdn);
+		let newAmount = 0; //item.amount;
+		let updateAmountList = [];
+		console.log("changed Item:");
+		console.log(item);
+
+		if(doc.doctype === 'Quotation'){
+			let used_doc;
+			if(doc.doc != undefined) 
+				used_doc = doc.doc;
+			else used_doc = doc;
+			for (let i = 0; i < used_doc.items.length; i++) {
+				console.log("look on item:");
+				console.log(used_doc.items[i]);
+				if (item.position_group === used_doc.items[i].position_group && item.position_group != undefined) {
+					updateAmountList.push(i);
+					newAmount += (used_doc.items[i].rate * used_doc.items[i].qty);
+					//if(item.item_code != doc.items[i].item_code){
+						
+					//}
+	
+				}
+			}
+			for (let i = 0; i < updateAmountList.length; i++) {
+				try {
+					doc.items[updateAmountList[i]].pos_amount = newAmount;
+				} catch (error) {
+					doc.doc.items[updateAmountList[i]].pos_amount = newAmount;
+				}
+				
+			}
+		}
+		
+		//doc.doc.refresh_fields("items");
+	}
 	item_code(doc, cdt, cdn) {
 		var me = this;
 		var item = frappe.get_doc(cdt, cdn);
@@ -1143,6 +1186,11 @@ erpnext.TransactionController = class TransactionController extends erpnext.taxe
 		let item = frappe.get_doc(cdt, cdn);
 		item.stock_uom_rate = flt(item.rate)/flt(item.conversion_factor);
 		refresh_field("stock_uom_rate", item.name, item.parentfield);
+
+		frappe.run_serially([
+			() => this.position_group(doc, cdt, cdn)
+		]);
+		
 	}
 	service_stop_date(frm, cdt, cdn) {
 		var child = locals[cdt][cdn];

@@ -8,6 +8,9 @@
  "field_order": [
   "item_code",
   "customer_item_code",
+  "position_group",
+  "hide_in_pos_group",
+  "pos_amount",
   "col_break1",
   "item_name",
   "section_break_5",
@@ -644,12 +647,44 @@
    "no_copy": 1,
    "options": "currency",
    "read_only": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "bold": 1,
+   "fieldname": "position_group",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Position Group",
+   "options": "Quotation Position Group",
+   "remember_last_selected_value": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "True",
+   "fieldname": "hide_in_pos_group",
+   "fieldtype": "Check",
+   "label": "Hide in Position Group",
+   "print_hide": 1,
+   "report_hide": 1
+  },
+  {
+   "fieldname": "pos_amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Position Amount",
+   "non_negative": 1,
+   "print_hide": 1,
+   "report_hide": 1
   }
  ],
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-07-15 12:40:51.074820",
+ "modified": "2022-12-28 06:28:50.708205",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation Item",
@@ -657,5 +692,6 @@
  "permissions": [],
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "track_changes": 1
 }
