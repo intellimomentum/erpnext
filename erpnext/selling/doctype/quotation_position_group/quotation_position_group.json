@@ -9,7 +9,8 @@
  "engine": "InnoDB",
  "field_order": [
   "position_group",
-  "description"
+  "description",
+  "type"
  ],
  "fields": [
   {
@@ -24,11 +25,18 @@
    "fieldname": "description",
    "fieldtype": "Data",
    "label": "Description"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "Single\nGrouped",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-12-27 06:48:32.132984",
+ "modified": "2022-12-29 08:58:44.016310",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation Position Group",
