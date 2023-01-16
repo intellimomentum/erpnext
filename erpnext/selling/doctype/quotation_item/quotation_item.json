@@ -236,7 +236,6 @@
    "width": "100px"
   },
   {
-   "collapsible": 1,
    "fieldname": "discount_and_margin",
    "fieldtype": "Section Break",
    "label": "Discount and Margin"
@@ -245,12 +244,13 @@
    "depends_on": "price_list_rate",
    "fieldname": "margin_type",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Margin Type",
    "options": "\nPercentage\nAmount",
    "print_hide": 1
   },
   {
-   "depends_on": "eval:doc.margin_type && doc.price_list_rate",
+   "depends_on": "//eval:doc.margin_type && doc.price_list_rate",
    "fieldname": "margin_rate_or_amount",
    "fieldtype": "Float",
    "label": "Margin Rate or Amount",
@@ -288,7 +288,7 @@
    "options": "currency"
   },
   {
-   "depends_on": "eval:doc.margin_type && doc.price_list_rate && doc.margin_rate_or_amount",
+   "depends_on": "//eval:doc.margin_type && doc.price_list_rate && doc.margin_rate_or_amount",
    "fieldname": "base_rate_with_margin",
    "fieldtype": "Currency",
    "label": "Rate With Margin (Company Currency)",
@@ -684,7 +684,7 @@
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-12-28 06:28:50.708205",
+ "modified": "2023-01-16 09:48:21.075457",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation Item",
