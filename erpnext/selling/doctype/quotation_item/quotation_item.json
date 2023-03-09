@@ -8,6 +8,9 @@
  "field_order": [
   "item_code",
   "customer_item_code",
+  "position_group",
+  "hide_in_pos_group",
+  "pos_amount",
   "col_break1",
   "item_name",
   "section_break_5",
@@ -49,8 +52,6 @@
   "pricing_rules",
   "stock_uom_rate",
   "is_free_item",
-  "is_alternative",
-  "has_alternative_item",
   "section_break_43",
   "valuation_rate",
   "column_break_45",
@@ -92,6 +93,7 @@
    "oldfieldtype": "Link",
    "options": "Item",
    "print_width": "150px",
+   "reqd": 1,
    "search_index": 1,
    "width": "150px"
   },
@@ -234,7 +236,6 @@
    "width": "100px"
   },
   {
-   "collapsible": 1,
    "fieldname": "discount_and_margin",
    "fieldtype": "Section Break",
    "label": "Discount and Margin"
@@ -243,12 +244,13 @@
    "depends_on": "price_list_rate",
    "fieldname": "margin_type",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Margin Type",
    "options": "\nPercentage\nAmount",
    "print_hide": 1
   },
   {
-   "depends_on": "eval:doc.margin_type && doc.price_list_rate",
+   "depends_on": "//eval:doc.margin_type && doc.price_list_rate",
    "fieldname": "margin_rate_or_amount",
    "fieldtype": "Float",
    "label": "Margin Rate or Amount",
@@ -286,7 +288,7 @@
    "options": "currency"
   },
   {
-   "depends_on": "eval:doc.margin_type && doc.price_list_rate && doc.margin_rate_or_amount",
+   "depends_on": "//eval:doc.margin_type && doc.price_list_rate && doc.margin_rate_or_amount",
    "fieldname": "base_rate_with_margin",
    "fieldtype": "Currency",
    "label": "Rate With Margin (Company Currency)",
@@ -647,26 +649,42 @@
    "read_only": 1
   },
   {
-   "default": "0",
-   "fieldname": "is_alternative",
-   "fieldtype": "Check",
-   "label": "Is Alternative",
-   "print_hide": 1
+   "allow_in_quick_entry": 1,
+   "bold": 1,
+   "fieldname": "position_group",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Position Group",
+   "options": "Quotation Position Group",
+   "remember_last_selected_value": 1
   },
   {
-   "default": "0",
-   "fieldname": "has_alternative_item",
+   "allow_in_quick_entry": 1,
+   "default": "True",
+   "fieldname": "hide_in_pos_group",
    "fieldtype": "Check",
-   "hidden": 1,
-   "label": "Has Alternative Item",
+   "label": "Hide in Position Group",
    "print_hide": 1,
-   "read_only": 1
+   "report_hide": 1
+  },
+  {
+   "fieldname": "pos_amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Position Amount",
+   "non_negative": 1,
+   "print_hide": 1,
+   "report_hide": 1
   }
  ],
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-02-06 11:00:07.042364",
+ "modified": "2023-01-16 09:48:21.075457",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation Item",
