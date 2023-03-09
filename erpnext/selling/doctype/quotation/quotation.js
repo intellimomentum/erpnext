@@ -407,7 +407,7 @@ function start_quotation_template_dialog(frm) {
 
 					  // Copy-Paste Operation
 					  let idx = items_idx+1;
-					  let fields = ['item_code', 'qty'];
+					  let fields = ['item_code', 'qty', 'position_group', 'hide_in_pos_group'];
 					  for(var m = 0; m < fields.length; m++){
 						  frm.get_field("items").grid.grid_rows[idx].doc[fields[m]] = item[fields[m]];
 						  frm.get_field("items").grid.grid_rows[idx].refresh_field(fields[m]);
