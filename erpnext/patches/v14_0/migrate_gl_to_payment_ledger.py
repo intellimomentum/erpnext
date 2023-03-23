@@ -1,6 +1,6 @@
 import frappe
 from frappe import qb
-from frappe.query_builder import Case, CustomFunction
+from frappe.query_builder import CustomFunction
 from frappe.query_builder.custom import ConstantColumn
 from frappe.query_builder.functions import Count, IfNull
 from frappe.utils import flt
@@ -18,9 +18,27 @@ def create_accounting_dimension_fields():
 			make_dimension_in_accounting_doctypes(dimension, ["Payment Ledger Entry"])
 
 
+<<<<<<< HEAD
 def generate_name_for_payment_ledger_entries(gl_entries, start):
 	for index, entry in enumerate(gl_entries, 0):
 		entry.name = start + index
+=======
+def generate_name_and_calculate_amount(gl_entries, start, receivable_accounts):
+	for index, entry in enumerate(gl_entries, 0):
+		entry.name = start + index
+		if entry.account in receivable_accounts:
+			entry.account_type = "Receivable"
+			entry.amount = entry.debit - entry.credit
+			entry.amount_in_account_currency = (
+				entry.debit_in_account_currency - entry.credit_in_account_currency
+			)
+		else:
+			entry.account_type = "Payable"
+			entry.amount = entry.credit - entry.debit
+			entry.amount_in_account_currency = (
+				entry.credit_in_account_currency - entry.debit_in_account_currency
+			)
+>>>>>>> upstream/version-14
 
 
 def get_columns():
@@ -48,6 +66,9 @@ def get_columns():
 		"due_date",
 		"finance_book",
 	]
+
+	if frappe.db.has_column("Payment Ledger Entry", "remarks"):
+		columns.append("remarks")
 
 	dimensions_and_defaults = get_dimensions()
 	if dimensions_and_defaults:
@@ -99,12 +120,36 @@ def execute():
 		ifelse = CustomFunction("IF", ["condition", "then", "else"])
 
 		# Get Records Count
+<<<<<<< HEAD
 		accounts = (
 			qb.from_(account)
 			.select(account.name)
 			.where((account.account_type == "Receivable") | (account.account_type == "Payable"))
 			.orderby(account.name)
+=======
+		relavant_accounts = (
+			qb.from_(account)
+			.select(account.name, account.account_type)
+			.where((account.account_type == "Receivable") | (account.account_type == "Payable"))
+			.orderby(account.name)
+			.run(as_dict=True)
+>>>>>>> upstream/version-14
 		)
+		un_processed = (
+			qb.from_(gl)
+			.select(Count(gl.name))
+			.where((gl.is_cancelled == 0) & (gl.account.isin(accounts)))
+			.run()
+		)[0][0]
+
+<<<<<<< HEAD
+		if un_processed:
+			print(f"Migrating {un_processed} GL Entries to Payment Ledger")
+
+=======
+		receivable_accounts = [x.name for x in relavant_accounts if x.account_type == "Receivable"]
+		accounts = [x.name for x in relavant_accounts]
+
 		un_processed = (
 			qb.from_(gl)
 			.select(Count(gl.name))
@@ -115,6 +160,7 @@ def execute():
 		if un_processed:
 			print(f"Migrating {un_processed} GL Entries to Payment Ledger")
 
+>>>>>>> upstream/version-14
 			processed = 0
 			last_update_percent = 0
 			batch_size = 5000
@@ -122,6 +168,7 @@ def execute():
 
 			while True:
 				if last_name:
+<<<<<<< HEAD
 					where_clause = gl.name.gt(last_name) & (gl.is_cancelled == 0)
 				else:
 					where_clause = gl.is_cancelled == 0
@@ -134,12 +181,24 @@ def execute():
 						gl.star,
 						ConstantColumn(1).as_("docstatus"),
 						account.account_type.as_("account_type"),
+=======
+					where_clause = gl.name.gt(last_name) & gl.account.isin(accounts) & gl.is_cancelled == 0
+				else:
+					where_clause = gl.account.isin(accounts) & gl.is_cancelled == 0
+
+				gl_entries = (
+					qb.from_(gl)
+					.select(
+						gl.star,
+						ConstantColumn(1).as_("docstatus"),
+>>>>>>> upstream/version-14
 						IfNull(
 							ifelse(gl.against_voucher_type == "", None, gl.against_voucher_type), gl.voucher_type
 						).as_("against_voucher_type"),
 						IfNull(ifelse(gl.against_voucher == "", None, gl.against_voucher), gl.voucher_no).as_(
 							"against_voucher_no"
 						),
+<<<<<<< HEAD
 						# convert debit/credit to amount
 						Case()
 						.when(account.account_type == "Receivable", gl.debit - gl.credit)
@@ -153,6 +212,8 @@ def execute():
 						)
 						.else_(gl.credit_in_account_currency - gl.debit_in_account_currency)
 						.as_("amount_in_account_currency"),
+=======
+>>>>>>> upstream/version-14
 					)
 					.where(where_clause)
 					.orderby(gl.name)
@@ -163,8 +224,13 @@ def execute():
 				if gl_entries:
 					last_name = gl_entries[-1].name
 
+<<<<<<< HEAD
 					# primary key(name) for payment ledger records
 					generate_name_for_payment_ledger_entries(gl_entries, processed)
+=======
+					# add primary key(name) and calculate based on debit and credit
+					generate_name_and_calculate_amount(gl_entries, processed, receivable_accounts)
+>>>>>>> upstream/version-14
 
 					try:
 						insert_query = build_insert_query()

@@ -50,6 +50,7 @@ frappe.query_reports["Gross Profit"] = {
 			"fieldtype": "Link",
 			"options": "Sales Person"
 		},
+<<<<<<< HEAD
 		{
 			"fieldname": "warehouse",
 			"label": __("Warehouse"),
@@ -64,6 +65,8 @@ frappe.query_reports["Gross Profit"] = {
 				};
 			},
 		},
+=======
+>>>>>>> upstream/version-14
 	],
 	"tree": true,
 	"name_field": "parent",

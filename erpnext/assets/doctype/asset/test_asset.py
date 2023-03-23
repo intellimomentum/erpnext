@@ -12,7 +12,10 @@ from frappe.utils import (
 	get_first_day,
 	get_last_day,
 	getdate,
+<<<<<<< HEAD
 	is_last_day_of_the_month,
+=======
+>>>>>>> upstream/version-14
 	nowdate,
 )
 
@@ -24,6 +27,7 @@ from erpnext.assets.doctype.asset.asset import (
 	update_maintenance_status,
 )
 from erpnext.assets.doctype.asset.depreciation import (
+	is_last_day_of_the_month,
 	post_depreciation_entries,
 	restore_asset,
 	scrap_asset,
@@ -210,9 +214,12 @@ class TestAsset(AssetSetup):
 			submit=1,
 		)
 
+<<<<<<< HEAD
 		first_asset_depr_schedule = get_asset_depr_schedule_doc(asset.name, "Active")
 		self.assertEquals(first_asset_depr_schedule.status, "Active")
 
+=======
+>>>>>>> upstream/version-14
 		post_depreciation_entries(date=add_months(purchase_date, 2))
 		asset.load_from_db()
 
@@ -224,11 +231,14 @@ class TestAsset(AssetSetup):
 
 		scrap_asset(asset.name)
 		asset.load_from_db()
+<<<<<<< HEAD
 		first_asset_depr_schedule.load_from_db()
 
 		second_asset_depr_schedule = get_asset_depr_schedule_doc(asset.name, "Active")
 		self.assertEquals(second_asset_depr_schedule.status, "Active")
 		self.assertEquals(first_asset_depr_schedule.status, "Cancelled")
+=======
+>>>>>>> upstream/version-14
 
 		accumulated_depr_amount = flt(
 			asset.gross_purchase_amount - asset.finance_books[0].value_after_depreciation,
@@ -301,9 +311,12 @@ class TestAsset(AssetSetup):
 			submit=1,
 		)
 
+<<<<<<< HEAD
 		first_asset_depr_schedule = get_asset_depr_schedule_doc(asset.name, "Active")
 		self.assertEquals(first_asset_depr_schedule.status, "Active")
 
+=======
+>>>>>>> upstream/version-14
 		post_depreciation_entries(date=add_months(purchase_date, 2))
 
 		si = make_sales_invoice(asset=asset.name, item_code="Macbook Pro", company="_Test Company")
@@ -315,12 +328,15 @@ class TestAsset(AssetSetup):
 
 		self.assertEqual(frappe.db.get_value("Asset", asset.name, "status"), "Sold")
 
+<<<<<<< HEAD
 		first_asset_depr_schedule.load_from_db()
 
 		second_asset_depr_schedule = get_asset_depr_schedule_doc(asset.name, "Active")
 		self.assertEquals(second_asset_depr_schedule.status, "Active")
 		self.assertEquals(first_asset_depr_schedule.status, "Cancelled")
 
+=======
+>>>>>>> upstream/version-14
 		pro_rata_amount, _, _ = asset.get_pro_rata_amt(
 			asset.finance_books[0], 9000, get_last_day(add_months(purchase_date, 1)), date
 		)

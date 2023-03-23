@@ -8,9 +8,12 @@ from frappe.utils import add_days, get_last_day, nowdate
 
 from erpnext.assets.doctype.asset.asset import get_asset_value_after_depreciation
 from erpnext.assets.doctype.asset.test_asset import create_asset_data
+<<<<<<< HEAD
 from erpnext.assets.doctype.asset_depreciation_schedule.asset_depreciation_schedule import (
 	get_asset_depr_schedule_doc,
 )
+=======
+>>>>>>> upstream/version-14
 from erpnext.stock.doctype.purchase_receipt.test_purchase_receipt import make_purchase_receipt
 
 
@@ -74,9 +77,12 @@ class TestAssetValueAdjustment(unittest.TestCase):
 		)
 		asset_doc.submit()
 
+<<<<<<< HEAD
 		first_asset_depr_schedule = get_asset_depr_schedule_doc(asset_doc.name, "Active")
 		self.assertEquals(first_asset_depr_schedule.status, "Active")
 
+=======
+>>>>>>> upstream/version-14
 		current_value = get_asset_value_after_depreciation(asset_doc.name)
 		adj_doc = make_asset_value_adjustment(
 			asset=asset_doc.name, current_asset_value=current_value, new_asset_value=50000.0

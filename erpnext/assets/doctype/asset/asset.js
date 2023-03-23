@@ -222,6 +222,7 @@ frappe.ui.form.on('Asset', {
 				asset_values.push(flt(frm.doc.gross_purchase_amount - frm.doc.opening_accumulated_depreciation, precision('gross_purchase_amount')));
 			}
 
+<<<<<<< HEAD
 			let depr_schedule = (await frappe.call(
 				"erpnext.assets.doctype.asset_depreciation_schedule.asset_depreciation_schedule.get_depr_schedule",
 				{
@@ -232,6 +233,9 @@ frappe.ui.form.on('Asset', {
 			)).message;
 
 			$.each(depr_schedule || [], function(i, v) {
+=======
+			$.each(frm.doc.schedules || [], function(i, v) {
+>>>>>>> upstream/version-14
 				x_intervals.push(frappe.format(v.schedule_date, { fieldtype: 'Date' }));
 				var asset_value = flt(frm.doc.gross_purchase_amount - v.accumulated_depreciation_amount, precision('gross_purchase_amount'));
 				if(v.journal_entry) {
@@ -240,7 +244,11 @@ frappe.ui.form.on('Asset', {
 					if (in_list(["Scrapped", "Sold"], frm.doc.status)) {
 						asset_values.push(null);
 					} else {
+<<<<<<< HEAD
 						asset_values.push(asset_value)
+=======
+						asset_values.push(asset_value);
+>>>>>>> upstream/version-14
 					}
 				}
 			});
@@ -310,6 +318,20 @@ frappe.ui.form.on('Asset', {
 		// frm.toggle_reqd("next_depreciation_date", (!frm.doc.is_existing_asset && frm.doc.calculate_depreciation));
 	},
 
+<<<<<<< HEAD
+=======
+	make_schedules_editable: function(frm) {
+		if (frm.doc.finance_books) {
+			var is_editable = frm.doc.finance_books.filter(d => d.depreciation_method == "Manual").length > 0
+				? true : false;
+
+			frm.toggle_enable("schedules", is_editable);
+			frm.fields_dict["schedules"].grid.toggle_enable("schedule_date", is_editable);
+			frm.fields_dict["schedules"].grid.toggle_enable("depreciation_amount", is_editable);
+		}
+	},
+
+>>>>>>> upstream/version-14
 	make_sales_invoice: function(frm) {
 		frappe.call({
 			args: {
@@ -540,6 +562,48 @@ frappe.ui.form.on('Asset Finance Book', {
 	}
 });
 
+<<<<<<< HEAD
+=======
+frappe.ui.form.on('Depreciation Schedule', {
+	make_depreciation_entry: function(frm, cdt, cdn) {
+		var row = locals[cdt][cdn];
+		if (!row.journal_entry) {
+			frappe.call({
+				method: "erpnext.assets.doctype.asset.depreciation.make_depreciation_entry",
+				args: {
+					"asset_name": frm.doc.name,
+					"date": row.schedule_date
+				},
+				callback: function(r) {
+					frappe.model.sync(r.message);
+					frm.refresh();
+				}
+			})
+		}
+	},
+
+	depreciation_amount: function(frm, cdt, cdn) {
+		erpnext.asset.set_accumulated_depreciation(frm, locals[cdt][cdn].finance_book_id);
+	}
+
+});
+
+erpnext.asset.set_accumulated_depreciation = function(frm, finance_book_id) {
+	var depreciation_method = frm.doc.finance_books[Number(finance_book_id) - 1].depreciation_method;
+
+	if(depreciation_method != "Manual") return;
+
+	var accumulated_depreciation = flt(frm.doc.opening_accumulated_depreciation);
+
+	$.each(frm.doc.schedules || [], function(i, row) {
+		if (row.finance_book_id === finance_book_id) {
+			accumulated_depreciation  += flt(row.depreciation_amount);
+			frappe.model.set_value(row.doctype, row.name, "accumulated_depreciation_amount", accumulated_depreciation);
+		};
+	})
+};
+
+>>>>>>> upstream/version-14
 erpnext.asset.scrap_asset = function(frm) {
 	frappe.confirm(__("Do you really want to scrap this asset?"), function () {
 		frappe.call({

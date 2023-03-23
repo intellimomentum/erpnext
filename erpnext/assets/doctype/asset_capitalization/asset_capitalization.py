@@ -19,9 +19,12 @@ from erpnext.assets.doctype.asset.depreciation import (
 	reverse_depreciation_entry_made_after_disposal,
 )
 from erpnext.assets.doctype.asset_category.asset_category import get_asset_category_account
+<<<<<<< HEAD
 from erpnext.assets.doctype.asset_depreciation_schedule.asset_depreciation_schedule import (
 	make_new_active_asset_depr_schedules_and_cancel_current_ones,
 )
+=======
+>>>>>>> upstream/version-14
 from erpnext.controllers.stock_controller import StockController
 from erpnext.setup.doctype.brand.brand import get_brand_defaults
 from erpnext.setup.doctype.item_group.item_group import get_item_group_defaults
@@ -429,12 +432,16 @@ class AssetCapitalization(StockController):
 			asset = self.get_asset(item)
 
 			if asset.calculate_depreciation:
+<<<<<<< HEAD
 				notes = _(
 					"This schedule was created when Asset {0} was consumed through Asset Capitalization {1}."
 				).format(
 					get_link_to_form(asset.doctype, asset.name), get_link_to_form(self.doctype, self.get("name"))
 				)
 				depreciate_asset(asset, self.posting_date, notes)
+=======
+				depreciate_asset(asset, self.posting_date)
+>>>>>>> upstream/version-14
 				asset.reload()
 
 			fixed_asset_gl_entries = get_gl_entries_on_asset_disposal(
@@ -520,12 +527,16 @@ class AssetCapitalization(StockController):
 			asset_doc.purchase_date = self.posting_date
 			asset_doc.gross_purchase_amount = total_target_asset_value
 			asset_doc.purchase_receipt_amount = total_target_asset_value
+<<<<<<< HEAD
 			notes = _(
 				"This schedule was created when target Asset {0} was updated through Asset Capitalization {1}."
 			).format(
 				get_link_to_form(asset_doc.doctype, asset_doc.name), get_link_to_form(self.doctype, self.name)
 			)
 			make_new_active_asset_depr_schedules_and_cancel_current_ones(asset_doc, notes)
+=======
+			asset_doc.prepare_depreciation_data()
+>>>>>>> upstream/version-14
 			asset_doc.flags.ignore_validate_update_after_submit = True
 			asset_doc.save()
 		elif self.docstatus == 2:
@@ -536,12 +547,16 @@ class AssetCapitalization(StockController):
 
 				if asset.calculate_depreciation:
 					reverse_depreciation_entry_made_after_disposal(asset, self.posting_date)
+<<<<<<< HEAD
 					notes = _(
 						"This schedule was created when Asset {0} was restored on Asset Capitalization {1}'s cancellation."
 					).format(
 						get_link_to_form(asset.doctype, asset.name), get_link_to_form(self.doctype, self.name)
 					)
 					reset_depreciation_schedule(asset, self.posting_date, notes)
+=======
+					reset_depreciation_schedule(asset, self.posting_date)
+>>>>>>> upstream/version-14
 
 	def get_asset(self, item):
 		asset = frappe.get_doc("Asset", item.asset)
@@ -625,7 +640,11 @@ def get_target_asset_details(asset=None, company=None):
 
 @frappe.whitelist()
 def get_consumed_stock_item_details(args):
+<<<<<<< HEAD
 	if isinstance(args, str):
+=======
+	if isinstance(args, string_types):
+>>>>>>> upstream/version-14
 		args = json.loads(args)
 
 	args = frappe._dict(args)
@@ -693,7 +712,11 @@ def get_warehouse_details(args):
 
 @frappe.whitelist()
 def get_consumed_asset_details(args):
+<<<<<<< HEAD
 	if isinstance(args, str):
+=======
+	if isinstance(args, string_types):
+>>>>>>> upstream/version-14
 		args = json.loads(args)
 
 	args = frappe._dict(args)

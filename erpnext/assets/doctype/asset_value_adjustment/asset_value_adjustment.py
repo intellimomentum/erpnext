@@ -10,7 +10,14 @@ from frappe.utils import date_diff, flt, formatdate, get_link_to_form, getdate
 from erpnext.accounts.doctype.accounting_dimension.accounting_dimension import (
 	get_checks_for_pl_and_bs_accounts,
 )
+<<<<<<< HEAD
 from erpnext.assets.doctype.asset.asset import get_asset_value_after_depreciation
+=======
+from erpnext.assets.doctype.asset.asset import (
+	get_asset_value_after_depreciation,
+	get_depreciation_amount,
+)
+>>>>>>> upstream/version-14
 from erpnext.assets.doctype.asset.depreciation import get_depreciation_accounts
 from erpnext.assets.doctype.asset_depreciation_schedule.asset_depreciation_schedule import (
 	get_asset_depr_schedule_doc,
@@ -170,9 +177,16 @@ class AssetValueAdjustment(Document):
 
 			d.db_update()
 
+<<<<<<< HEAD
 			new_asset_depr_schedule_doc.set_accumulated_depreciation(d, ignore_booked_entry=True)
 			for asset_data in depr_schedule:
 				if not asset_data.journal_entry:
 					asset_data.db_update()
 
 			new_asset_depr_schedule_doc.submit()
+=======
+		asset.set_accumulated_depreciation(ignore_booked_entry=True)
+		for asset_data in asset.schedules:
+			if not asset_data.journal_entry:
+				asset_data.db_update()
+>>>>>>> upstream/version-14

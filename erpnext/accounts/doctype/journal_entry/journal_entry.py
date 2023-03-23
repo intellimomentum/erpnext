@@ -327,6 +327,7 @@ class JournalEntry(AccountsController):
 				asset = frappe.get_doc("Asset", d.reference_name)
 
 				if asset.calculate_depreciation:
+<<<<<<< HEAD
 					je_found = False
 
 					for row in asset.get("finance_books"):
@@ -346,6 +347,20 @@ class JournalEntry(AccountsController):
 
 								je_found = True
 								break
+=======
+					for s in asset.get("schedules"):
+						if s.journal_entry == self.name:
+							s.db_set("journal_entry", None)
+
+							idx = cint(s.finance_book_id) or 1
+							finance_books = asset.get("finance_books")[idx - 1]
+							finance_books.value_after_depreciation += s.depreciation_amount
+							finance_books.db_update()
+
+							asset.set_status()
+
+							break
+>>>>>>> upstream/version-14
 				else:
 					depr_value = d.debit or d.credit
 

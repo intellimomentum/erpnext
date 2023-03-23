@@ -32,9 +32,12 @@
   "cost_center",
   "dimension_col_break",
   "project",
+<<<<<<< HEAD
   "column_break_27",
   "campaign",
   "source",
+=======
+>>>>>>> upstream/version-14
   "currency_and_price_list",
   "currency",
   "conversion_rate",
@@ -203,7 +206,13 @@
   "more_information",
   "status",
   "inter_company_invoice_reference",
+<<<<<<< HEAD
   "represents_company",
+=======
+  "campaign",
+  "represents_company",
+  "source",
+>>>>>>> upstream/version-14
   "customer_group",
   "col_break23",
   "is_internal_customer",
@@ -2084,10 +2093,13 @@
    "fieldtype": "Column Break"
   },
   {
+<<<<<<< HEAD
    "fieldname": "column_break_27",
    "fieldtype": "Column Break"
   },
   {
+=======
+>>>>>>> upstream/version-14
    "fieldname": "column_break_52",
    "fieldtype": "Column Break"
   },
@@ -2112,6 +2124,7 @@
    "width": "50%"
   },
   {
+<<<<<<< HEAD
    "default": "0",
    "fieldname": "repost_required",
    "fieldtype": "Check",
@@ -2121,6 +2134,8 @@
    "read_only": 1
   },
   {
+=======
+>>>>>>> upstream/version-14
    "fieldname": "incoterm",
    "fieldtype": "Link",
    "label": "Incoterm",
@@ -2131,6 +2146,18 @@
    "fieldname": "named_place",
    "fieldtype": "Data",
    "label": "Named Place"
+<<<<<<< HEAD
+=======
+  },
+  {
+   "default": "0",
+   "fieldname": "repost_required",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Repost Required",
+   "no_copy": 1,
+   "read_only": 1
+>>>>>>> upstream/version-14
   }
  ],
  "icon": "fa fa-file-text",
@@ -2143,11 +2170,14 @@
    "link_fieldname": "consolidated_invoice"
   }
  ],
+<<<<<<< HEAD
  "modified": "2023-01-28 19:45:47.538163",
+=======
+ "modified": "2023-03-13 11:43:15.883055",
+>>>>>>> upstream/version-14
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",
- "name_case": "Title Case",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [

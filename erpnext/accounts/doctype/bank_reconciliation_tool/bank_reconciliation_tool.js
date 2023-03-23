@@ -18,6 +18,10 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 	},
 
 	onload: function (frm) {
+		// Set default filter dates
+		today = frappe.datetime.get_today()
+		frm.doc.bank_statement_from_date = frappe.datetime.add_months(today, -1);
+		frm.doc.bank_statement_to_date = today;
 		frm.trigger('bank_account');
 	},
 
@@ -32,6 +36,7 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 	},
 
 	refresh: function (frm) {
+		frm.disable_save();
 		frappe.require("bank-reconciliation-tool.bundle.js", () =>
 			frm.trigger("make_reconciliation_tool")
 		);
@@ -58,6 +63,7 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 					},
 				})
 		);
+<<<<<<< HEAD
 
 		frm.add_custom_button(__('Auto Reconcile'), function() {
 			frappe.call({
@@ -73,9 +79,28 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 			})
 		});
 	},
+=======
+>>>>>>> upstream/version-14
 
-	after_save: function (frm) {
-		frm.trigger("make_reconciliation_tool");
+		frm.add_custom_button(__('Auto Reconcile'), function() {
+			frappe.call({
+				method: "erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.auto_reconcile_vouchers",
+				args: {
+					bank_account: frm.doc.bank_account,
+					from_date: frm.doc.bank_statement_from_date,
+					to_date: frm.doc.bank_statement_to_date,
+					filter_by_reference_date: frm.doc.filter_by_reference_date,
+					from_reference_date: frm.doc.from_reference_date,
+					to_reference_date: frm.doc.to_reference_date,
+				},
+			})
+		});
+
+		frm.add_custom_button(__('Get Unreconciled Entries'), function() {
+			frm.trigger("make_reconciliation_tool");
+		});
+		frm.change_custom_button_type('Get Unreconciled Entries', null, 'primary');
+
 	},
 
 	bank_account: function (frm) {
@@ -89,7 +114,7 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 					r.account,
 					"account_currency",
 					(r) => {
-						frm.currency = r.account_currency;
+						frm.doc.account_currency = r.account_currency;
 						frm.trigger("render_chart");
 					}
 				);
@@ -162,9 +187,9 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 					"reconciliation_tool_cards"
 				).$wrapper,
 				bank_statement_closing_balance:
-					frm.doc.bank_statement_closing_balance,
+				frm.doc.bank_statement_closing_balance,
 				cleared_balance: frm.cleared_balance,
-				currency: frm.currency,
+				currency: frm.doc.account_currency,
 			}
 		);
 	},

@@ -24,10 +24,17 @@
   "account_manager",
   "image",
   "defaults_tab",
+<<<<<<< HEAD
   "default_currency",
   "default_bank_account",
   "column_break_14",
   "default_price_list",
+=======
+  "default_price_list",
+  "default_bank_account",
+  "column_break_14",
+  "default_currency",
+>>>>>>> upstream/version-14
   "internal_customer_section",
   "is_internal_customer",
   "represents_company",
@@ -568,7 +575,11 @@
    "link_fieldname": "party"
   }
  ],
+<<<<<<< HEAD
  "modified": "2023-02-18 11:04:46.343527",
+=======
+ "modified": "2022-11-08 15:52:34.462657",
+>>>>>>> upstream/version-14
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",

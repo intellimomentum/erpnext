@@ -391,14 +391,22 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldname: "deposit",
 				fieldtype: "Currency",
 				label: "Deposit",
+<<<<<<< HEAD
 				options: "currency",
+=======
+				options: "account_currency",
+>>>>>>> upstream/version-14
 				read_only: 1,
 			},
 			{
 				fieldname: "withdrawal",
 				fieldtype: "Currency",
 				label: "Withdrawal",
+<<<<<<< HEAD
 				options: "currency",
+=======
+				options: "account_currency",
+>>>>>>> upstream/version-14
 				read_only: 1,
 			},
 			{
@@ -416,18 +424,30 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldname: "allocated_amount",
 				fieldtype: "Currency",
 				label: "Allocated Amount",
+<<<<<<< HEAD
 				options: "Currency",
+=======
+				options: "account_currency",
+>>>>>>> upstream/version-14
 				read_only: 1,
 			},
 			{
 				fieldname: "unallocated_amount",
 				fieldtype: "Currency",
 				label: "Unallocated Amount",
+<<<<<<< HEAD
 				options: "Currency",
 				read_only: 1,
 			},
 			{
 				fieldname: "currency",
+=======
+				options: "account_currency",
+				read_only: 1,
+			},
+			{
+				fieldname: "account_currency",
+>>>>>>> upstream/version-14
 				fieldtype: "Link",
 				label: "Currency",
 				options: "Currency",

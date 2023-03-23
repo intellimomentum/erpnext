@@ -255,9 +255,12 @@ class TestAssetCapitalization(unittest.TestCase):
 			company="_Test Company with perpetual inventory",
 			submit=1,
 		)
+<<<<<<< HEAD
 
 		first_asset_depr_schedule = get_asset_depr_schedule_doc(consumed_asset.name, "Active")
 		self.assertEquals(first_asset_depr_schedule.status, "Active")
+=======
+>>>>>>> upstream/version-14
 
 		# Create and submit Asset Captitalization
 		asset_capitalization = create_asset_capitalization(
@@ -288,6 +291,7 @@ class TestAssetCapitalization(unittest.TestCase):
 		consumed_asset.reload()
 		self.assertEqual(consumed_asset.status, "Decapitalized")
 
+<<<<<<< HEAD
 		first_asset_depr_schedule.load_from_db()
 
 		second_asset_depr_schedule = get_asset_depr_schedule_doc(consumed_asset.name, "Active")
@@ -300,6 +304,10 @@ class TestAssetCapitalization(unittest.TestCase):
 			d
 			for d in depr_schedule_of_consumed_asset
 			if getdate(d.schedule_date) == getdate(capitalization_date)
+=======
+		consumed_depreciation_schedule = [
+			d for d in consumed_asset.schedules if getdate(d.schedule_date) == getdate(capitalization_date)
+>>>>>>> upstream/version-14
 		]
 		self.assertTrue(
 			consumed_depreciation_schedule and consumed_depreciation_schedule[0].journal_entry

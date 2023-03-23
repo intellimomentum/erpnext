@@ -216,6 +216,7 @@ class TestQualityInspection(FrappeTestCase):
 		qa.save()
 		self.assertEqual(qa.status, "Accepted")
 
+<<<<<<< HEAD
 	@change_settings("System Settings", {"number_format": "#.###,##"})
 	def test_diff_number_format(self):
 		self.assertEqual(frappe.db.get_default("number_format"), "#.###,##")  # sanity check
@@ -250,6 +251,8 @@ class TestQualityInspection(FrappeTestCase):
 		qa.delete()
 		dn.delete()
 
+=======
+>>>>>>> upstream/version-14
 
 def create_quality_inspection(**args):
 	args = frappe._dict(args)

@@ -710,6 +710,7 @@ class TestPricingRule(unittest.TestCase):
 
 		item.delete()
 
+<<<<<<< HEAD
 	def test_item_group_price_with_blank_uom_pricing_rule(self):
 		group = frappe.get_doc(doctype="Item Group", item_group_name="_Test Pricing Rule Item Group")
 		group.save()
@@ -836,6 +837,8 @@ class TestPricingRule(unittest.TestCase):
 		item.delete()
 		group.delete()
 
+=======
+>>>>>>> upstream/version-14
 	def test_pricing_rule_for_different_currency(self):
 		make_item("Test Sanitizer Item")
 

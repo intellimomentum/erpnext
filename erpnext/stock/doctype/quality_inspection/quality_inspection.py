@@ -6,7 +6,11 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.model.mapper import get_mapped_doc
+<<<<<<< HEAD
 from frappe.utils import cint, cstr, flt, get_number_format_info
+=======
+from frappe.utils import cint, cstr, flt
+>>>>>>> upstream/version-14
 
 from erpnext.stock.doctype.quality_inspection_template.quality_inspection_template import (
 	get_template_details,

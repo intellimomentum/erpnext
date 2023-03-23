@@ -573,6 +573,7 @@ class SalesInvoice(SellingController):
 
 			# validate if deferred revenue is enabled for any item
 			# Don't allow to update the invoice if deferred revenue is enabled
+<<<<<<< HEAD
 			if needs_repost:
 				for item in self.get("items"):
 					if item.enable_deferred_revenue:
@@ -581,6 +582,15 @@ class SalesInvoice(SellingController):
 								"Deferred Revenue is enabled for item {0}. You cannot update the invoice after submission."
 							).format(item.item_code)
 						)
+=======
+			for item in self.get("items"):
+				if item.enable_deferred_revenue:
+					frappe.throw(
+						_(
+							"Deferred Revenue is enabled for item {0}. You cannot update the invoice after submission."
+						).format(item.item_code)
+					)
+>>>>>>> upstream/version-14
 
 			self.db_set("repost_required", needs_repost)
 
@@ -1187,6 +1197,7 @@ class SalesInvoice(SellingController):
 						if asset.calculate_depreciation:
 							posting_date = frappe.db.get_value("Sales Invoice", self.return_against, "posting_date")
 							reverse_depreciation_entry_made_after_disposal(asset, posting_date)
+<<<<<<< HEAD
 							notes = _(
 								"This schedule was created when Asset {0} was returned after being sold through Sales Invoice {1}."
 							).format(
@@ -1205,6 +1216,13 @@ class SalesInvoice(SellingController):
 								get_link_to_form(self.doctype, self.get("name")),
 							)
 							depreciate_asset(asset, self.posting_date, notes)
+=======
+							reset_depreciation_schedule(asset, self.posting_date)
+
+					else:
+						if asset.calculate_depreciation:
+							depreciate_asset(asset, self.posting_date)
+>>>>>>> upstream/version-14
 							asset.reload()
 
 						fixed_asset_gl_entries = get_gl_entries_on_asset_disposal(
