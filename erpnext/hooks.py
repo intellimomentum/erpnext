@@ -10,7 +10,6 @@ app_email = "info@erpnext.com"
 app_license = "GNU General Public License (v3)"
 source_link = "https://github.com/frappe/erpnext"
 app_logo_url = "/assets/erpnext/images/erpnext-logo.svg"
-required_apps = ["payments"]
 
 
 develop_version = "14.x.x-develop"
@@ -369,7 +368,7 @@ auto_cancel_exempted_doctypes = [
 
 scheduler_events = {
 	"cron": {
-		"0/5 * * * *": [
+		"0/15 * * * *": [
 			"erpnext.manufacturing.doctype.bom_update_log.bom_update_log.resume_bom_cost_update_jobs",
 		],
 		"0/30 * * * *": [
